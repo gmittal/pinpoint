@@ -1,0 +1,456 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf8">
+  <meta name="viewport" content="width=device-width">
+  <title>My Steroids App</title>
+
+  <link rel="stylesheet" href="/vendor/ionic/css/ionic.css" />
+  <link rel="stylesheet" href="/stylesheets/application.css" />
+
+
+  <style>
+      @font-face {
+      font-family: 'Roboto';
+      font-style: normal;
+      font-weight: 100;
+      src: local('Roboto Thin'), local('Roboto-Thin'), url(vzIUHo9z-oJ4WgkpPOtg13YhjbSpvc47ee6xR_80Hnw.woff) format('woff');
+    }
+    @font-face {
+      font-family: 'Roboto';
+      font-style: normal;
+      font-weight: 300;
+      src: local('Roboto Light'), local('Roboto-Light'), url(Hgo13k-tfSpn0qi1SFdUfbO3LdcAZYWl9Si6vvxL-qU.woff) format('woff');
+    }
+    @font-face {
+      font-family: 'Roboto';
+      font-style: normal;
+      font-weight: 400;
+      src: local('Roboto Regular'), local('Roboto-Regular'), url(CrYjSnGjrRCn0pd9VQsnFOvvDin1pK8aKteLpeZ5c0A.woff) format('woff');
+    }
+    @font-face {
+      font-family: 'Roboto';
+      font-style: normal;
+      font-weight: 700;
+      src: local('Roboto Bold'), local('Roboto-Bold'), url(d-6IYplOFocCacKzxwXSOLO3LdcAZYWl9Si6vvxL-qU.woff) format('woff');
+    }
+    @font-face {
+      font-family: 'Roboto';
+      font-style: normal;
+      font-weight: 900;
+      src: local('Roboto Black'), local('Roboto-Black'), url(mnpfi9pxYH-Go5UiibESIrO3LdcAZYWl9Si6vvxL-qU.woff) format('woff');
+    }
+    @font-face {
+      font-family: 'Roboto Condensed';
+      font-style: normal;
+      font-weight: 300;
+      src: local('Roboto Condensed Light'), local('RobotoCondensed-Light'), url(b9QBgL0iMZfDSpmcXcE8nMrfajfqx5pse9BUPMmpr-I.woff) format('woff');
+    }
+    @font-face {
+      font-family: 'Roboto Condensed';
+      font-style: normal;
+      font-weight: 400;
+      src: local('Roboto Condensed Regular'), local('RobotoCondensed-Regular'), url(Zd2E9abXLFGSr9G3YK2MsNxB8OB85xaNTJvVSB9YUjQ.woff) format('woff');
+    }
+    @font-face {
+      font-family: 'Roboto Condensed';
+      font-style: normal;
+      font-weight: 700;
+      src: local('Roboto Condensed Bold'), local('RobotoCondensed-Bold'), url(b9QBgL0iMZfDSpmcXcE8nPZRQUbYfRc-1FWT9T9EE8M.woff) format('woff');
+    }
+
+    @font-face {
+      font-family: 'Dense';
+      font-style:normal;
+      src: url('Dense-Regular.otf');
+    }
+
+
+    .userBlock {
+      font-family: 'Dense';
+      /*font-weight: 700;*/
+      width:100%;
+      padding: 15px;
+      background-color:#9b59b6;
+      text-transform: uppercase;
+      text-align:center;
+      color:white;
+      font-size: 28.7pt;
+      line-height: 120%;
+    }
+
+    .turquoise:active
+     {
+      background-color:#16a085;
+    }
+
+    .red:active
+     {
+      background-color:#c0392b;
+    }
+
+    .blue:active
+     {
+      background-color:#2980b9;
+    }
+
+    .darkHeader {
+      background-color:#2c3e50;
+      font-size: 30pt;
+      padding:15px;
+      /*position:absolute;*/
+      /*top:0;*/
+    }
+
+    .red {
+      background-color: #e74c3c;
+    }
+
+    .blue {
+      background-color: #3498db;
+    }
+
+    .turquoise {
+      background-color:#1abc9c;
+      border-top: 1px solid #16a085;
+    }
+
+    body {
+      background-color: #2c3e50;
+    }
+
+    input {
+      background-color: transparent;
+      text-align: center;
+      font-family: 'Roboto Condensed';
+      font-weight:700;
+      color:white;
+
+    }
+
+    a {
+
+    }
+
+  </style>
+</head>
+<body class="content" ontouchstart="">
+<div class="userBlock darkHeader"><img src="icons/location.png" style="vertical-align:middle; height: 30pt;"><span style="vertical-align:middle;"> PINPOINT</span></div>
+
+<div class="contactButtons">
+<div class="userBlock" id="userName">{USER NAME}</div>
+<div class="userBlock red" onclick="notifyAll(document.getElementById('userName').innerHTML);">notify all</div>
+
+</div>
+
+<div class="userBlock blue" id="addButton" onclick="addContact();" style="font-family: 'Roboto-UltraBold';">+</div>
+
+
+
+<script src="/javascripts/onerror.js"></script>
+<script src="/javascripts/console.log.js"></script>
+
+<!-- cordova.js is served from localhost to ensure the correct version -->
+<script src="http://localhost/cordova.js"></script>
+<script src="/components/steroids-js/steroids.js"></script>
+
+<script src="/javascripts/application.js"></script>
+<script src="/javascripts/jquery.min.js"></script>
+<script>
+// var colorOrder = [];
+// alert($("#userName").text());
+
+var urlReq = 'http://powerful-depths-1557.herokuapp.com/';
+
+
+document.addEventListener("deviceready", initUserName, false);
+
+var phoneNumbers = [];
+var contactNames = [];
+
+
+
+function initUserName() {
+  // window.localStorage.clear(); // uncomment for development ONLY
+  // alert(window.localStorage.getItem("phoneList"));
+  
+  if (window.localStorage.getItem("pinpointUsername") == null) {
+
+      navigator.notification.prompt(
+        'Please enter your name',  // message
+        function (results) {
+          window.localStorage.setItem("pinpointUsername", results.input1);
+          $("#userName").text(results.input1);
+
+        },                  // callback to invoke
+        'Name',            // title
+        ['OK'],             // buttonLabels
+        'Pi Patel'                 // defaultText
+      ); 
+
+  } else {
+      var savedUsername = window.localStorage.getItem("pinpointUsername");
+      $("#userName").text(savedUsername);
+  }
+
+
+  if (window.localStorage.getItem("phoneListPin") != null && window.localStorage.getItem("nameListPin") != null) {
+    phoneNumbers = JSON.parse(window.localStorage.getItem("phoneListPin"));
+    contactNames = JSON.parse(window.localStorage.getItem("nameListPin"));
+
+    for (var i = 0; i < phoneNumbers.length; i++) {
+      var number = phoneNumbers[i];
+      var name = contactNames[i];
+
+      $(".contactButtons").append('<div class="userBlock turquoise" onclick="notifyNumber(\'' + number + '\', \'' + $("#userName").text() + '\')">' + name + '</div>');
+    }
+
+  }
+
+
+}
+
+
+
+
+
+
+function addContact() {
+  var phoneNumber;
+  var name;
+
+  navigator.notification.prompt(
+    'Please enter a contact\'s phone number (country code required)',  // message
+    function (results) {
+        // alert(results.input1);
+        if (results.buttonIndex == 1) {
+          phoneNumber = results.input1;
+
+          navigator.notification.prompt(
+            'Please enter a contact name',  // message
+            function (results1) {
+
+              if (results1.buttonIndex == 1) {
+                name = results1.input1;
+                phoneNumbers.push(phoneNumber.toString());
+                contactNames.push(name.toString());
+// 
+                // alert(phoneNumbers);
+
+                window.localStorage.setItem("phoneListPin", JSON.stringify(phoneNumbers));
+                window.localStorage.setItem("nameListPin", JSON.stringify(contactNames));
+
+                $(".contactButtons").append('<div class="userBlock turquoise" onclick="notifyNumber(\'' + phoneNumber + '\', \'' + $("#userName").text() + '\')">' + name + '</div>');
+
+              }
+            },                  // callback to invoke
+            'Contact Name',            // title
+            ['OK'],             // buttonLabels
+            'Richard Parker'                 // defaultText
+          );
+
+        }
+     },                  // callback to invoke
+    'Add Contact',            // title
+    ['OK','Cancel'],             // buttonLabels
+    '+13141592654'                 // defaultText
+  );
+
+}
+
+function notifyNumber(phoneNum, user) {
+  // $.post('http://32e112b.ngrok.com/', {"number": phone, "userID": user}, function (val) {
+
+  // });
+
+  // var location = grabLocation();
+  // alert(location.lng + ", " + location.lat;
+  // var jsonData = {};
+
+  // if (grabLocation().lng != undefined && grabLocation().lat != undefined || grabLocation().lng != null && grabLocation().lat == null) {
+  //   jsonData = {"number": phone, "userID": user, "longitude": grabLocation().lng, "latitude": grabLocation().lat};
+  // } else {
+  //   jsonData = {"number": phone, "userID": user}; 
+  // }
+  // alert(grabLocation().lng + ", " + grabLocation().lat);
+
+  var phone = [];
+  phone.push(phoneNum);
+  phone = JSON.stringify(phone);
+
+  // var phone = JSON.stringify(phoneArr);
+
+  // alert(phone);
+
+  navigator.geolocation.getCurrentPosition(function (position) {
+
+        var lng = position.coords.longitude;
+        var lat = position.coords.latitude;
+
+
+          $.ajax({
+            type:'POST',
+            url:urlReq,
+            data:{"number": phone, "userID": user, "longitude":lng, "latitude":lat},
+            success:function(data) {
+                    navigator.notification.alert(
+                      'The alert was successfully sent.',  // message
+                      alertDismissed,         // callback
+                      'Sent!',            // title
+                      'OK'                  // buttonName
+                    );
+            },
+            error:function (xhr, status, errorThrown) {
+                // alert(errorThrown); //could be alert if you don't use the dev tools
+                    navigator.notification.alert(
+                      'The alert was successfully sent.',  // message
+                      alertDismissed,         // callback
+                      'Sent!',            // title
+                      'OK'                  // buttonName
+                    );
+            }
+          });
+
+
+
+  }, function (error) {
+        var lng = 0;
+        var lat = 0;
+
+
+          $.ajax({
+            type:'POST',
+            url:urlReq,
+            data:{"number": phone, "userID": user, "longitude":lng, "latitude":lat},
+            success:function(data) {
+                    navigator.notification.alert(
+                      'The alert was successfully sent.',  // message
+                      alertDismissed,         // callback
+                      'Sent!',            // title
+                      'OK'                  // buttonName
+                    );
+            },
+            error:function (xhr, status, errorThrown) {
+                // alert(errorThrown); //could be alert if you don't use the dev tools
+                    navigator.notification.alert(
+                      'The alert was successfully sent.',  // message
+                      alertDismissed,         // callback
+                      'Sent!',            // title
+                      'OK'                  // buttonName
+                    );
+            }
+          });
+
+
+
+
+  });
+
+
+
+
+    // $.ajax({
+    //   type: "POST",
+    //   url: 'http://32e112b.ngrok.com/',
+    //   data: {"number": phone, "userID": user},
+    //   success: function() {
+    //     alert("YOYOYOYO");
+    //   },
+    //   dataType: 'jsonp'
+    // });
+
+}
+
+
+function notifyAll(user) {
+
+
+    // var phone = [];
+    // phone.push(phoneNum);
+    phone = JSON.stringify(phoneNumbers);
+
+    // var phone = JSON.stringify(phoneArr);
+
+    // alert(phone);
+
+    navigator.geolocation.getCurrentPosition(function (position) {
+
+          var lng = position.coords.longitude;
+          var lat = position.coords.latitude;
+
+
+            $.ajax({
+              type:'POST',
+              url:urlReq,
+              data:{"number": phone, "userID": user, "longitude":lng, "latitude":lat},
+              success:function(data) {
+                      navigator.notification.alert(
+                        'The alert was successfully sent.',  // message
+                        alertDismissed,         // callback
+                        'Sent!',            // title
+                        'OK'                  // buttonName
+                      );
+              },
+              error:function (xhr, status, errorThrown) {
+                  // alert(errorThrown); //could be alert if you don't use the dev tools
+                      navigator.notification.alert(
+                        'The alert was successfully sent.',  // message
+                        alertDismissed,         // callback
+                        'Sent!',            // title
+                        'OK'                  // buttonName
+                      );
+              }
+            });
+
+
+
+    }, function (error) {
+          var lng = 0;
+          var lat = 0;
+
+
+            $.ajax({
+              type:'POST',
+              url:urlReq,
+              data:{"number": phone, "userID": user, "longitude":lng, "latitude":lat},
+              success:function(data) {
+                      navigator.notification.alert(
+                        'The alert was successfully sent.',  // message
+                        alertDismissed,         // callback
+                        'Sent!',            // title
+                        'OK'                  // buttonName
+                      );
+              },
+              error:function (xhr, status, errorThrown) {
+                  // alert(errorThrown); //could be alert if you don't use the dev tools
+                      navigator.notification.alert(
+                        'The alert was successfully sent.',  // message
+                        alertDismissed,         // callback
+                        'Sent!',            // title
+                        'OK'                  // buttonName
+                      );
+              }
+            });
+
+
+
+
+    });
+}
+
+
+
+
+
+// grabLocation();
+
+function alertDismissed() {
+
+}
+
+
+
+</script>
+
+</body>
+</html>
