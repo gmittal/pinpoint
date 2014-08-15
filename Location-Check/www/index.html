@@ -187,13 +187,16 @@ var previousLocations = [];
           var lat = position.coords.latitude;
 
 
+
           marker.setPosition(new google.maps.LatLng(lat, lng));
           previousLocations.push(new google.maps.LatLng(lat, lng));
 
-
-          if (map.getCenter() != previousLocations[previousLocations.length-1]) {
+          if (marker.getPosition() != previousLocations[previousLocations.length-1]) {
             map.setCenter(new google.maps.LatLng( lat, lng ) );
           }
+
+
+
 
 
           // marker = new google.maps.Marker({
