@@ -185,16 +185,26 @@ var previousLocations = [];
 
           var lng = position.coords.longitude;
           var lat = position.coords.latitude;
+          // alert(marker.getPosition());
+
+          // alert(previousLocations);
+
+          // var 
 
 
+          // if (map.getCenter() != marker.getPosition()) {
+            
+          // }
 
+
+          map.setCenter(new google.maps.LatLng( lat, lng ) );
           marker.setPosition(new google.maps.LatLng(lat, lng));
-          previousLocations.push(new google.maps.LatLng(lat, lng));
+          // previousLocations.push(new google.maps.LatLng(lat, lng));
 
-          if (marker.getPosition() != previousLocations[previousLocations.length-1]) {
-            map.setCenter(new google.maps.LatLng( lat, lng ) );
-          }
+          // alert(marker.getPosition());
+          // alert(previousLocations[previousLocations.length-1]);
 
+          
 
 
 
@@ -289,11 +299,40 @@ var contactNames = [];
 
 
 
+  function checkConnection() {
+      var networkState = navigator.connection.type;
 
+      var states = {};
+      states[Connection.UNKNOWN]  = 'Unknown connection';
+      states[Connection.ETHERNET] = 'Ethernet connection';
+      states[Connection.WIFI]     = 'WiFi connection';
+      states[Connection.CELL_2G]  = 'Cell 2G connection';
+      states[Connection.CELL_3G]  = 'Cell 3G connection';
+      states[Connection.CELL_4G]  = 'Cell 4G connection';
+      states[Connection.CELL]     = 'Cell generic connection';
+      states[Connection.NONE]     = 'No network connection';
+
+      return states[networkState];
+
+      // alert('Connection type: ' + states[networkState]);
+  }
 
 
 
 function initUserName() {
+    if (checkConnection() == "No network connection") {
+          // $(".calendarView").hide();
+          $("#gmap_canvas").html("<div style=\"background-color:white; height:100%; width:100%;\"><br/><br /><br /><br /><center>Unable to load map due to<br /> insufficient internet connection.</center></div>");
+     }
+
+
+
+
+
+
+
+
+
   // window.open('http://apache.org', '_blank', 'location=yes');
 
   // window.localStorage.clear(); // uncomment for development ONLY
@@ -489,7 +528,7 @@ function notifyNumber(phoneNum, user) {
 
 function notifyAll(user) {
 
-
+  if (phoneNumbers.length != 0) {
     // var phone = [];
     // phone.push(phoneNum);
     phone = JSON.stringify(phoneNumbers);
@@ -561,6 +600,11 @@ function notifyAll(user) {
 
 
     });
+
+
+
+
+  }
 }
 
 
@@ -572,6 +616,8 @@ function notifyAll(user) {
 function alertDismissed() {
 
 }
+
+
 
 
 
