@@ -136,6 +136,10 @@
 
     }
 
+    #gmap_canvas {
+      width:100%;
+    }
+
   </style>
 </head>
 <body class="content" ontouchstart="">
@@ -143,7 +147,7 @@
 <!-- <div id="map-canvas"/> -->
 <span class="holder">
 <div id="map">
-<script type="text/javascript" src="http://maps.google.com/maps/api/js?sensor=false"></script><div style="overflow:hidden;height:220px;width:320px;"><div id="gmap_canvas" style="height:220px;width:320px;"></div><style>#gmap_canvas img{max-width:none!important;background:none!important}</style><a class="google-map-code" href="http://www.map-embed.net" id="get-map-data">www.map-embed.net</a></div><script type="text/javascript"> 
+<script type="text/javascript" src="http://maps.google.com/maps/api/js?sensor=false"></script><div style="overflow:hidden;height:220px;width:100%;"><div id="gmap_canvas" style="height:220px;width:100%;"></div><style>#gmap_canvas img{max-width:none!important;background:none!important}</style><a class="google-map-code" href="http://www.map-embed.net" id="get-map-data">www.map-embed.net</a></div><script type="text/javascript"> 
 
 var previousLocations = [];
 
@@ -289,7 +293,7 @@ window.onbeforeunload = function (e) {
 
 
 
-var urlReq = 'ttp://safe-waters-1690.herokuapp.com/';
+var urlReq = 'http://107.170.245.170:5000/'; //digitalocean server
 
 
 document.addEventListener("deviceready", initUserName, false);
