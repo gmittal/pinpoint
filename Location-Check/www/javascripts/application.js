@@ -1,5 +1,5 @@
 // Display the native navigation bar with the title "Hello World!"
-// steroids.view.navigationBar.show("Emergency");
+steroids.view.navigationBar.hide();
 // steroids.statusBar.hide();
 
 // Set the WebView background color to white (effective on iOS only)
